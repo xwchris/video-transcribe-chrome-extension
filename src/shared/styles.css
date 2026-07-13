@@ -83,15 +83,23 @@ body {
 }
 
 .options-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
+.options-actions .primary-button,
 .options-actions .secondary-button {
-  min-width: 130px;
+  width: 100%;
+  min-width: 0;
   padding: 0 14px;
   text-align: center;
+}
+
+@media (max-width: 520px) {
+  .options-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 .shell {
