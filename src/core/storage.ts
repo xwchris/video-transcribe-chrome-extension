@@ -23,6 +23,10 @@ export async function setStoredApiKey(apiKey: string): Promise<void> {
   await chrome.storage.local.set({ [API_KEY_STORAGE_KEY]: apiKey.trim() });
 }
 
+export async function clearStoredApiKey(): Promise<void> {
+  await chrome.storage.local.remove(API_KEY_STORAGE_KEY);
+}
+
 export async function getLastTask(): Promise<StoredTask | null> {
   const result = await chrome.storage.local.get(LAST_TASK_STORAGE_KEY);
   const task = result[LAST_TASK_STORAGE_KEY];
