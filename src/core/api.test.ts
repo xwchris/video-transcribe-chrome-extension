@@ -4,7 +4,7 @@ import { VideosaysApiError, createVideosaysClient, isTerminalStatus, shouldAutoR
 describe('Videosays API client', () => {
   it('submits a transcription task with API key and extension tracking', async () => {
     const fetchMock = vi.fn(async () => new Response(JSON.stringify({ taskId: 'task_1', status: 'pending' })));
-    const client = createVideosaysClient({ apiKey: 'vs_test', fetchImpl: fetchMock });
+    const client = createVideosaysClient({ apiKey: 'dy_test', fetchImpl: fetchMock });
 
     const result = await client.submitTranscription('https://www.youtube.com/watch?v=abc');
 
@@ -13,7 +13,7 @@ describe('Videosays API client', () => {
       method: 'POST',
       headers: expect.objectContaining({
         'Content-Type': 'application/json',
-        'X-API-Key': 'vs_test',
+        'X-API-Key': 'dy_test',
         'X-Videosays-Client-Name': 'videosays-chrome-extension',
       }),
       body: JSON.stringify({
@@ -30,7 +30,7 @@ describe('Videosays API client', () => {
 
   it('normalizes API errors with status and code', async () => {
     const fetchMock = vi.fn(async () => new Response(JSON.stringify({ error: 'No credits', code: 'insufficient_credits' }), { status: 402 }));
-    const client = createVideosaysClient({ apiKey: 'vs_test', fetchImpl: fetchMock });
+    const client = createVideosaysClient({ apiKey: 'dy_test', fetchImpl: fetchMock });
 
     await expect(client.fetchCredits()).rejects.toMatchObject({
       name: 'VideosaysApiError',
@@ -55,7 +55,7 @@ describe('Videosays API client', () => {
 
   it('preserves non-JSON failure bodies', async () => {
     const fetchMock = vi.fn(async () => new Response('Gateway timeout', { status: 504 }));
-    const client = createVideosaysClient({ apiKey: 'vs_test', fetchImpl: fetchMock });
+    const client = createVideosaysClient({ apiKey: 'dy_test', fetchImpl: fetchMock });
 
     await expect(client.getTaskStatus('task_1')).rejects.toBeInstanceOf(VideosaysApiError);
   });
