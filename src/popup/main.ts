@@ -133,10 +133,11 @@ function downloadText(filename: string, text: string): void {
   URL.revokeObjectURL(url);
 }
 
-function renderStoredTask(task: { taskId: string; input: string; status: string }): void {
+async function renderStoredTask(task: { taskId: string; input: string; status: string }): Promise<void> {
   currentTaskId = task.taskId;
   videoInput.value = task.input;
   renderTask({ id: task.taskId, status: task.status, input: task.input });
+  await refreshTask().catch(showError);
 }
 
 function setPlatformIcon(element: HTMLElement, platform?: string | null): void {
@@ -306,7 +307,7 @@ async function init(): Promise<void> {
   if (!apiKey) {
     setPrimaryScreen('setup');
   } else if (lastTask && (!supported || areEquivalentSupportedLinks(supported, lastTask.input))) {
-    renderStoredTask(lastTask);
+    await renderStoredTask(lastTask);
   } else {
     setPrimaryScreen('app');
   }
