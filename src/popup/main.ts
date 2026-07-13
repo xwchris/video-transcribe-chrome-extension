@@ -168,6 +168,7 @@ function renderTask(task: TaskStatusResponse): void {
 
   taskStatus.textContent = formatStatus(status);
   taskStatus.className = `badge ${status}`;
+  taskPanel.dataset.taskState = status === 'completed' ? 'completed' : shouldAutoRefreshTask(status) ? 'active' : 'terminal';
   taskTitle.textContent = title;
   taskUrl.textContent = input;
   setPlatformIcon(taskPlatformIcon, platform);
@@ -308,8 +309,6 @@ async function init(): Promise<void> {
   if (!apiKey) {
     setPrimaryScreen('setup');
   } else if (lastTask && !supported) {
-    renderStoredTask(lastTask);
-  } else if (lastTask && shouldAutoRefreshTask(lastTask.status)) {
     renderStoredTask(lastTask);
   } else {
     setPrimaryScreen('app');
