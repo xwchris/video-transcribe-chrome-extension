@@ -8,7 +8,7 @@ html {
 
 body {
   margin: 0;
-  width: 390px;
+  width: 360px;
   background: #eef4ef;
   color: #111815;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -179,11 +179,22 @@ a {
 .copy-button {
   display: grid;
   min-width: 40px;
+  min-height: 40px;
   place-items: center;
   border: 0;
   background: transparent;
   color: #1d2622;
   font-size: 20px;
+}
+
+.icon-button svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
 }
 
 .icon-button:hover,
@@ -476,12 +487,17 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  min-width: 0;
 }
 
 .button-grid .button-link,
 .button-grid .secondary-button {
   min-width: 0;
+  overflow: hidden;
   padding: 0 10px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .button-grid .hidden {

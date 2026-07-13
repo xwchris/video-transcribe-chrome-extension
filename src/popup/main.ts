@@ -134,7 +134,7 @@ function renderTask(task: TaskStatusResponse): void {
   taskIdElement.textContent = shortTaskId(taskId);
   taskIdElement.title = taskId;
   openTask.href = taskDashboardUrl(taskId);
-  openTask.textContent = status === 'completed' ? '↗ Open full transcript' : '↗ Open in dashboard';
+  openTask.textContent = status === 'completed' ? '↗ Full transcript' : '↗ Dashboard';
 
   currentTranscript = text;
   transcript.textContent = text ? text.slice(0, 1200) : '';
