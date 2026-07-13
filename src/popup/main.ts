@@ -2,6 +2,7 @@ import { VideosaysApiError, createVideosaysClient, isTerminalStatus, shouldAutoR
 import { createSrt, safeExportFilename, type ExportTranscriptSegment } from '../core/export';
 import { applyI18n, t } from '../core/i18n';
 import { detectPlatformFromInput, extractFirstSupportedLink, type SupportedPlatform } from '../core/links';
+import { taskDashboardUrl } from '../core/routes';
 import { getLastTask, getStoredApiKey, maskApiKey, setLastTask, setStoredApiKey } from '../core/storage';
 import '../shared/styles.css';
 
@@ -108,10 +109,6 @@ function formatStatus(status: string): string {
 
 function shortTaskId(taskId: string): string {
   return taskId.length > 14 ? `${taskId.slice(0, 10)}...` : taskId;
-}
-
-function taskDashboardUrl(taskId: string): string {
-  return `https://videosays.com/dashboard?task=${encodeURIComponent(taskId)}`;
 }
 
 function getTranscriptSegments(value: unknown): ExportTranscriptSegment[] {

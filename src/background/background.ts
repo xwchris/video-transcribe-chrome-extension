@@ -1,6 +1,7 @@
 import { createVideosaysClient } from '../core/api';
 import { t } from '../core/i18n';
 import { extractFirstSupportedLink } from '../core/links';
+import { taskDashboardUrl } from '../core/routes';
 import { getStoredApiKey, setLastTask } from '../core/storage';
 
 const CONTEXT_MENU_ID = 'videosays-transcribe';
@@ -30,7 +31,7 @@ async function submitFromInput(input: string): Promise<void> {
     createdAt: new Date().toISOString(),
   });
 
-  await chrome.tabs.create({ url: `https://videosays.com/dashboard?task=${encodeURIComponent(taskId)}` });
+  await chrome.tabs.create({ url: taskDashboardUrl(taskId) });
 }
 
 chrome.runtime.onInstalled.addListener(() => {
