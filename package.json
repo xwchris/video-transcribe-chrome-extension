@@ -1,8 +1,8 @@
 {
-  "name": "videosays-chrome-extension",
+  "name": "video-transcribe-chrome-extension",
   "version": "0.1.0",
   "private": true,
-  "description": "Chrome extension for submitting public video links to Videosays transcription.",
+  "description": "Chrome extension to transcribe public video links with Videosays.",
   "type": "module",
   "scripts": {
     "test": "vitest run",

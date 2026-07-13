@@ -1,6 +1,25 @@
-# Videosays Chrome Extension
+# Video Transcribe Chrome Extension by Videosays
 
-Private Chrome extension repository for submitting public video links to Videosays transcription.
+A Chrome extension for turning public video links into transcripts with [Videosays](https://videosays.com).
+
+It detects supported video pages, submits the link to Videosays with your API key, and lets you track the transcription task from the popup.
+
+## Supported Platforms
+
+- YouTube
+- TikTok
+- Douyin
+- Bilibili
+- Instagram
+- X
+- Xiaohongshu
+- Kuaishou
+
+## Quick Links
+
+- [Try Videosays](https://videosays.com)
+- [Get a Videosays API key](https://videosays.com/dashboard/developer)
+- [API docs](https://videosays.com/docs)
 
 ## Development
 
@@ -11,6 +30,12 @@ npm run build
 ```
 
 Load `dist/` as an unpacked extension in Chrome.
+
+To create the Chrome Web Store upload package:
+
+```bash
+npm run package
+```
 
 ## Compliance Boundary
 
