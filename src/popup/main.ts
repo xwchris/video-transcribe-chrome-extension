@@ -23,7 +23,7 @@ const taskTitle = document.querySelector<HTMLElement>('#task-title')!;
 const taskUrl = document.querySelector<HTMLElement>('#task-url')!;
 const taskPlatformIcon = document.querySelector<HTMLElement>('#task-platform-icon')!;
 const taskIdElement = document.querySelector<HTMLElement>('#task-id')!;
-const copyTaskIdButton = document.querySelector<HTMLButtonElement>('#copy-task-id')!;
+const openTaskId = document.querySelector<HTMLAnchorElement>('#open-task-id')!;
 const completedAt = document.querySelector<HTMLElement>('#completed-at')!;
 const progressRow = document.querySelector<HTMLElement>('#progress-row')!;
 const progressLabel = document.querySelector<HTMLElement>('#progress-label')!;
@@ -140,6 +140,7 @@ function renderTask(task: TaskStatusResponse): void {
   setPlatformIcon(taskPlatformIcon, platform);
   taskIdElement.textContent = shortTaskId(taskId);
   taskIdElement.title = taskId;
+  openTaskId.href = taskDashboardUrl(taskId);
   openTask.href = taskDashboardUrl(taskId);
   openTask.textContent = status === 'completed' ? t('fullTranscript') : t('dashboard');
 
@@ -286,9 +287,6 @@ saveKeyButton.addEventListener('click', async () => {
 settingsButton.addEventListener('click', () => void chrome.runtime.openOptionsPage());
 submitButton.addEventListener('click', () => void submit());
 refreshButton.addEventListener('click', () => void refreshTask().catch(showError));
-copyTaskIdButton.addEventListener('click', () => {
-  if (currentTaskId) void navigator.clipboard.writeText(currentTaskId);
-});
 copyPreviewButton.addEventListener('click', () => {
   if (currentTranscript) void navigator.clipboard.writeText(currentTranscript);
 });

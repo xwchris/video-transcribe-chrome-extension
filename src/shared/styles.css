@@ -259,7 +259,7 @@ a {
 .button-link,
 .secondary-button,
 .icon-button,
-.copy-button,
+.task-link-button,
 .error-action {
   min-height: 40px;
   border-radius: 7px;
@@ -289,7 +289,7 @@ a {
 .button-link:active,
 .secondary-button:active,
 .icon-button:active,
-.copy-button:active,
+.task-link-button:active,
 .error-action:active {
   transform: scale(0.96);
 }
@@ -303,6 +303,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 7px;
   border: 1px solid rgba(17, 24, 21, 0.26);
   background: #fff;
   color: #111815;
@@ -311,7 +312,7 @@ a {
 }
 
 .icon-button,
-.copy-button {
+.task-link-button {
   display: grid;
   min-width: 40px;
   min-height: 40px;
@@ -329,7 +330,7 @@ a {
 }
 
 .icon-button:hover,
-.copy-button:hover {
+.task-link-button:hover {
   background: #eef4ef;
 }
 
@@ -558,10 +559,27 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
-.copy-button {
+.task-link-button {
   min-width: 28px;
   min-height: 28px;
+  color: #26302b;
   font-size: 13px;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.button-icon {
+  display: inline-grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  font-size: 17px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.refresh-icon {
+  transform: translateY(-0.5px);
 }
 
 .progress-row {

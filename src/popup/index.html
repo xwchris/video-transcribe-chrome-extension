@@ -75,7 +75,7 @@
         <div class="task-id-row">
           <span data-i18n="taskId">Task ID:</span>
           <code id="task-id"></code>
-          <button id="copy-task-id" type="button" class="copy-button" title="Copy task ID" aria-label="Copy task ID" data-i18n-title="copyTaskId" data-i18n-aria-label="copyTaskId">▣</button>
+          <a id="open-task-id" class="task-link-button" target="_blank" rel="noreferrer" title="Open task details" aria-label="Open task details" data-i18n-title="openTaskDetails" data-i18n-aria-label="openTaskDetails">↗</a>
         </div>
         <p id="completed-at" class="completed-at hidden"></p>
         <div id="progress-row" class="progress-row hidden">
@@ -90,7 +90,10 @@
         </div>
         <pre id="transcript" class="transcript hidden"></pre>
         <div class="button-grid">
-          <button id="refresh" type="button" class="secondary-button" data-i18n="refresh">⟳ Refresh</button>
+          <button id="refresh" type="button" class="secondary-button">
+            <span class="button-icon refresh-icon" aria-hidden="true">↻</span>
+            <span data-i18n="refreshLabel">Refresh</span>
+          </button>
           <a id="open-task" class="button-link" target="_blank" rel="noreferrer" data-i18n="dashboard">↗ Dashboard</a>
           <button id="copy-preview" type="button" class="secondary-button hidden" data-i18n="copyPreview">▣ Copy preview</button>
         </div>
