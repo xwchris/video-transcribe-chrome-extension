@@ -1,7 +1,7 @@
 import { VideosaysApiError, createVideosaysClient, isTerminalStatus, shouldAutoRefreshTask, type TaskStatusResponse } from '../core/api';
 import { createSrt, safeExportFilename, type ExportTranscriptSegment } from '../core/export';
 import { applyI18n, t } from '../core/i18n';
-import { detectPlatformFromInput, extractFirstSupportedLink, type SupportedPlatform } from '../core/links';
+import { areEquivalentSupportedLinks, detectPlatformFromInput, extractFirstSupportedLink, type SupportedPlatform } from '../core/links';
 import { taskDashboardUrl } from '../core/routes';
 import { getLastTask, getStoredApiKey, maskApiKey, setLastTask, setStoredApiKey } from '../core/storage';
 import '../shared/styles.css';
@@ -305,7 +305,7 @@ async function init(): Promise<void> {
   const lastTask = await getLastTask();
   if (!apiKey) {
     setPrimaryScreen('setup');
-  } else if (lastTask && !supported) {
+  } else if (lastTask && (!supported || areEquivalentSupportedLinks(supported, lastTask.input))) {
     renderStoredTask(lastTask);
   } else {
     setPrimaryScreen('app');

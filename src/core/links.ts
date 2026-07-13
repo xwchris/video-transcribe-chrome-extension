@@ -43,3 +43,21 @@ export function extractFirstSupportedLink(input: string): string | null {
   const normalized = normalizeInput(input);
   return isSupportedVideoUrl(normalized) ? normalized : null;
 }
+
+function comparableSupportedUrl(input: string): string | null {
+  const link = extractFirstSupportedLink(input);
+  if (!link) return null;
+  try {
+    const parsed = new URL(link);
+    parsed.hash = '';
+    return parsed.toString().replace(/\/$/, '');
+  } catch {
+    return normalizeInput(link).replace(/\/$/, '');
+  }
+}
+
+export function areEquivalentSupportedLinks(left: string, right: string): boolean {
+  const leftUrl = comparableSupportedUrl(left);
+  const rightUrl = comparableSupportedUrl(right);
+  return Boolean(leftUrl && rightUrl && leftUrl === rightUrl);
+}

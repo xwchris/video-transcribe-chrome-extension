@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { detectPlatformFromInput, extractFirstSupportedLink, isSupportedVideoUrl, normalizeInput } from './links';
+import { areEquivalentSupportedLinks, detectPlatformFromInput, extractFirstSupportedLink, isSupportedVideoUrl, normalizeInput } from './links';
 
 describe('links', () => {
   it('extracts the first supported URL from selected share text', () => {
@@ -32,5 +32,16 @@ describe('links', () => {
     expect(detectPlatformFromInput('https://www.kuaishou.com/short-video/abc')).toBe('kuaishou');
     expect(detectPlatformFromInput('https://www.instagram.com/reels/abc/')).toBe('instagram');
     expect(detectPlatformFromInput('https://x.com/user/status/123')).toBe('twitter');
+  });
+
+  it('matches the active tab link to the stored task input', () => {
+    expect(areEquivalentSupportedLinks(
+      'https://www.douyin.com/video/7660105156793684401',
+      ' https://www.douyin.com/video/7660105156793684401 ',
+    )).toBe(true);
+    expect(areEquivalentSupportedLinks(
+      'https://www.douyin.com/video/7660105156793684401',
+      'https://www.douyin.com/video/another',
+    )).toBe(false);
   });
 });
