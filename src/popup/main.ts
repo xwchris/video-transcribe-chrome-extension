@@ -13,7 +13,6 @@ const saveKeyButton = document.querySelector<HTMLButtonElement>('#save-key')!;
 const detectedUrl = document.querySelector<HTMLElement>('#detected-url')!;
 const detectedPlatformIcon = document.querySelector<HTMLElement>('#detected-platform-icon')!;
 const videoInput = document.querySelector<HTMLInputElement>('#video-input')!;
-const pasteButton = document.querySelector<HTMLButtonElement>('#paste')!;
 const submitButton = document.querySelector<HTMLButtonElement>('#submit')!;
 const settingsButton = document.querySelector<HTMLButtonElement>('#settings')!;
 const keyState = document.querySelector<HTMLElement>('#key-state')!;
@@ -271,13 +270,6 @@ saveKeyButton.addEventListener('click', async () => {
 });
 
 settingsButton.addEventListener('click', () => void chrome.runtime.openOptionsPage());
-pasteButton.addEventListener('click', async () => {
-  try {
-    videoInput.value = await navigator.clipboard.readText();
-  } catch {
-    setMessage('Clipboard access was blocked.', 'error');
-  }
-});
 submitButton.addEventListener('click', () => void submit());
 refreshButton.addEventListener('click', () => void refreshTask().catch(showError));
 copyTaskIdButton.addEventListener('click', () => {

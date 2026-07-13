@@ -184,7 +184,6 @@ a {
 .button-link,
 .secondary-button,
 .icon-button,
-.field-icon,
 .copy-button,
 .error-action {
   min-height: 40px;
@@ -213,7 +212,6 @@ a {
 .button-link:active,
 .secondary-button:active,
 .icon-button:active,
-.field-icon:active,
 .copy-button:active,
 .error-action:active {
   transform: scale(0.96);
@@ -236,7 +234,6 @@ a {
 }
 
 .icon-button,
-.field-icon,
 .copy-button {
   display: grid;
   min-width: 40px;
@@ -255,7 +252,6 @@ a {
 }
 
 .icon-button:hover,
-.field-icon:hover,
 .copy-button:hover {
   background: #eef4ef;
 }
