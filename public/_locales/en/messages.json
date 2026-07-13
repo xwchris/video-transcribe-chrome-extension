@@ -33,7 +33,7 @@
   "dashboard": { "message": "↗ Dashboard" },
   "records": { "message": "↗ Records" },
   "fullTranscript": { "message": "↗ Full transcript" },
-  "copyTranscript": { "message": "▣ Copy full transcript" },
+  "copyTranscript": { "message": "Copy full transcript" },
   "downloadSrt": { "message": "↓ Download SRT" },
   "noSrtTimeline": { "message": "SRT export requires timeline segments." },
   "transcriptCopied": { "message": "Transcript copied." },

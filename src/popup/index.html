@@ -94,7 +94,13 @@
             <span class="button-icon refresh-icon" aria-hidden="true">↻</span>
             <span data-i18n="refreshLabel">Refresh</span>
           </button>
-          <button id="copy-transcript" type="button" class="secondary-button hidden" data-i18n="copyTranscript">▣ Copy full transcript</button>
+          <button id="copy-transcript" type="button" class="secondary-button hidden">
+            <svg class="button-icon" aria-hidden="true" viewBox="0 0 1024 1024">
+              <path d="M640 341.333333H128a42.666667 42.666667 0 0 0-42.666667 42.666667v512a42.666667 42.666667 0 0 0 42.666667 42.666667h512a42.666667 42.666667 0 0 0 42.666667-42.666667V384a42.666667 42.666667 0 0 0-42.666667-42.666667z m-42.666667 512H170.666667V426.666667h426.666666v426.666666z" />
+              <path d="M896 85.333333H384a42.666667 42.666667 0 0 0-42.666667 42.666667v128h85.333334V170.666667h426.666666v426.666666h-85.333333v85.333334h128a42.666667 42.666667 0 0 0 42.666667-42.666667V128a42.666667 42.666667 0 0 0-42.666667-42.666667z" />
+            </svg>
+            <span data-i18n="copyTranscript">Copy full transcript</span>
+          </button>
           <button id="download-srt" type="button" class="secondary-button hidden" data-i18n="downloadSrt">↓ Download SRT</button>
           <a id="open-task" class="button-link" target="_blank" rel="noreferrer" data-i18n="dashboard">↗ Dashboard</a>
           <a id="open-records" class="secondary-button records-button" href="https://videosays.com/dashboard/records" target="_blank" rel="noreferrer" data-i18n="records">↗ Records</a>

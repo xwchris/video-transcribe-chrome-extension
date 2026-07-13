@@ -33,7 +33,7 @@
   "dashboard": { "message": "↗ 控制台" },
   "records": { "message": "↗ 记录页" },
   "fullTranscript": { "message": "↗ 完整文本" },
-  "copyTranscript": { "message": "▣ 复制完整文案" },
+  "copyTranscript": { "message": "复制完整文案" },
   "downloadSrt": { "message": "↓ 下载 SRT" },
   "noSrtTimeline": { "message": "需要带时间轴的结果才能导出 SRT。" },
   "transcriptCopied": { "message": "完整文案已复制。" },

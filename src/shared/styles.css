@@ -585,6 +585,7 @@ a {
   width: 18px;
   height: 18px;
   place-items: center;
+  fill: currentColor;
   font-size: 17px;
   font-weight: 850;
   line-height: 1;
