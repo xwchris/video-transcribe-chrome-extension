@@ -1,4 +1,5 @@
 import { VideosaysApiError, createVideosaysClient, isTerminalStatus, shouldAutoRefreshTask, type TaskStatusResponse } from '../core/api';
+import { createSrt, safeExportFilename, type ExportTranscriptSegment } from '../core/export';
 import { applyI18n, t } from '../core/i18n';
 import { detectPlatformFromInput, extractFirstSupportedLink, type SupportedPlatform } from '../core/links';
 import { getLastTask, getStoredApiKey, maskApiKey, setLastTask, setStoredApiKey } from '../core/storage';
@@ -32,12 +33,15 @@ const progressFill = document.querySelector<HTMLElement>('#progress-fill')!;
 const transcript = document.querySelector<HTMLElement>('#transcript')!;
 const openTask = document.querySelector<HTMLAnchorElement>('#open-task')!;
 const refreshButton = document.querySelector<HTMLButtonElement>('#refresh')!;
-const copyPreviewButton = document.querySelector<HTMLButtonElement>('#copy-preview')!;
+const copyTranscriptButton = document.querySelector<HTMLButtonElement>('#copy-transcript')!;
+const downloadSrtButton = document.querySelector<HTMLButtonElement>('#download-srt')!;
 const taskNote = document.querySelector<HTMLElement>('#task-note')!;
 
 let apiKey = '';
 let currentTaskId = '';
 let currentTranscript = '';
+let currentSegments: ExportTranscriptSegment[] = [];
+let currentExportName = 'transcript';
 let refreshTimer: number | null = null;
 
 const AUTO_REFRESH_INTERVAL_MS = 5000;
@@ -110,6 +114,28 @@ function taskDashboardUrl(taskId: string): string {
   return `https://videosays.com/dashboard?task=${encodeURIComponent(taskId)}`;
 }
 
+function getTranscriptSegments(value: unknown): ExportTranscriptSegment[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((segment) => {
+    if (!segment || typeof segment !== 'object') return [];
+    const record = segment as Record<string, unknown>;
+    if (typeof record.start !== 'number' || typeof record.end !== 'number' || typeof record.text !== 'string') return [];
+    return [{ start: record.start, end: record.end, text: record.text }];
+  });
+}
+
+function downloadText(filename: string, text: string): void {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 function renderStoredTask(task: { taskId: string; input: string; status: string }): void {
   currentTaskId = task.taskId;
   videoInput.value = task.input;
@@ -138,6 +164,7 @@ function renderTask(task: TaskStatusResponse): void {
   const platform = task.video?.platform ?? detectPlatformFromInput(input);
   const title = task.video?.title ?? t('transcriptionTask');
   const text = task.result?.text?.trim() ?? '';
+  const segments = getTranscriptSegments(task.result?.segments);
 
   taskStatus.textContent = formatStatus(status);
   taskStatus.className = `badge ${status}`;
@@ -151,9 +178,14 @@ function renderTask(task: TaskStatusResponse): void {
   openTask.textContent = status === 'completed' ? t('fullTranscript') : t('dashboard');
 
   currentTranscript = text;
+  currentSegments = segments;
+  currentExportName = safeExportFilename(title || taskId);
   transcript.textContent = text ? text.slice(0, 1200) : '';
   show(transcript, Boolean(text));
-  show(copyPreviewButton, Boolean(text));
+  show(copyTranscriptButton, Boolean(text));
+  show(downloadSrtButton, status === 'completed' && Boolean(text));
+  downloadSrtButton.disabled = segments.length === 0;
+  downloadSrtButton.title = segments.length === 0 ? t('noSrtTimeline') : '';
   show(completedAt, status === 'completed');
   completedAt.textContent = status === 'completed' ? t('completedOn', new Date().toLocaleString()) : '';
   show(progressRow, shouldAutoRefreshTask(status));
@@ -294,8 +326,18 @@ saveKeyButton.addEventListener('click', async () => {
 settingsButton.addEventListener('click', () => void chrome.runtime.openOptionsPage());
 submitButton.addEventListener('click', () => void submit());
 refreshButton.addEventListener('click', () => void refreshTask().catch(showError));
-copyPreviewButton.addEventListener('click', () => {
-  if (currentTranscript) void navigator.clipboard.writeText(currentTranscript);
+copyTranscriptButton.addEventListener('click', () => {
+  if (!currentTranscript) return;
+  void navigator.clipboard.writeText(currentTranscript);
+  setMessage(t('transcriptCopied'));
+});
+downloadSrtButton.addEventListener('click', () => {
+  if (!currentSegments.length) {
+    setMessage(t('noSrtTimeline'), 'error');
+    return;
+  }
+  downloadText(`${currentExportName}.srt`, createSrt(currentSegments));
+  setMessage(t('srtDownloaded'));
 });
 window.addEventListener('beforeunload', stopAutoRefresh);
 
