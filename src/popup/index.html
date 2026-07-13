@@ -8,36 +8,89 @@
   </head>
   <body>
     <main class="shell">
-      <header>
-        <div>
-          <p class="eyebrow">Videosays</p>
-          <h1>Video to text</h1>
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">V</div>
+          <div>
+            <h1>Videosays</h1>
+            <p>Video to text</p>
+          </div>
         </div>
-        <a class="icon-link" href="https://videosays.com/dashboard" target="_blank" rel="noreferrer" title="Open dashboard">↗</a>
+        <button id="settings" type="button" class="icon-button" title="Settings" aria-label="Open settings">
+          <span aria-hidden="true">⚙</span>
+        </button>
       </header>
 
-      <section id="setup" class="panel hidden">
+      <section id="setup" class="screen hidden">
         <label for="api-key">API key</label>
-        <input id="api-key" type="password" autocomplete="off" placeholder="vs_xxxxx" />
-        <button id="save-key" type="button">Save key</button>
-        <p class="hint">Find your key in Videosays Dashboard → Agent / API.</p>
+        <input id="api-key" type="password" autocomplete="off" placeholder="vs_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+        <button id="save-key" type="button" class="primary-button">Save API key</button>
+        <a class="link-row centered" href="https://videosays.com/dashboard/developer" target="_blank" rel="noreferrer">
+          <span aria-hidden="true">↗</span>
+          Get API key from Videosays dashboard
+        </a>
+        <div class="divider"></div>
+        <p class="lock-note"><span aria-hidden="true">▢</span> Your key is stored locally in Chrome.</p>
       </section>
 
-      <section id="app" class="panel hidden">
-        <label for="video-input">Video link</label>
-        <textarea id="video-input" rows="4" placeholder="Current tab URL or pasted share text"></textarea>
-        <button id="submit" type="button">Transcribe this page</button>
-        <p id="key-state" class="hint"></p>
-      </section>
-
-      <section id="task" class="panel hidden">
-        <div class="row">
-          <span id="task-status" class="badge">pending</span>
-          <button id="refresh" type="button" class="secondary">Refresh</button>
+      <section id="app" class="screen hidden">
+        <label>Detected video link</label>
+        <div class="detected-link">
+          <span id="detected-platform-icon" class="platform-icon" aria-hidden="true">▶</span>
+          <span id="detected-url" class="detected-url"></span>
         </div>
-        <p id="task-title" class="task-title"></p>
+        <label for="video-input">Or paste a video link</label>
+        <div class="input-wrap">
+          <input id="video-input" type="url" placeholder="https://..." />
+          <button id="paste" type="button" class="field-icon" title="Paste" aria-label="Paste video link">▣</button>
+        </div>
+        <button id="submit" type="button" class="primary-button">Transcribe this page</button>
+        <p class="support-copy">Supports public video links from YouTube, TikTok, Douyin, Bilibili, Instagram, X, and more.</p>
+        <div class="divider"></div>
+        <p id="key-state" class="key-state"></p>
+      </section>
+
+      <section id="task" class="screen hidden">
+        <div class="task-head">
+          <span id="task-status" class="badge">Pending</span>
+        </div>
+        <div class="media-row">
+          <span id="task-platform-icon" class="platform-icon small" aria-hidden="true">▶</span>
+          <div>
+            <p id="task-title" class="task-title"></p>
+            <p id="task-url" class="task-url"></p>
+          </div>
+        </div>
+        <div class="task-id-row">
+          <span>Task ID:</span>
+          <code id="task-id"></code>
+          <button id="copy-task-id" type="button" class="copy-button" title="Copy task ID" aria-label="Copy task ID">▣</button>
+        </div>
+        <p id="completed-at" class="completed-at hidden"></p>
+        <div id="progress-row" class="progress-row hidden">
+          <span class="spinner" aria-hidden="true"></span>
+          <div class="progress-copy">
+            <div class="progress-meta">
+              <span id="progress-label">Transcribing audio...</span>
+              <span id="progress-value">42%</span>
+            </div>
+            <div class="progress-track"><span id="progress-fill"></span></div>
+          </div>
+        </div>
         <pre id="transcript" class="transcript hidden"></pre>
-        <a id="open-task" class="button-link" target="_blank" rel="noreferrer">Open in dashboard</a>
+        <div class="button-grid">
+          <button id="refresh" type="button" class="secondary-button">⟳ Refresh status</button>
+          <a id="open-task" class="button-link" target="_blank" rel="noreferrer">↗ Open in dashboard</a>
+          <button id="copy-preview" type="button" class="secondary-button hidden">▣ Copy preview</button>
+        </div>
+        <p id="task-note" class="task-note">Status refreshes while this popup is open.</p>
+      </section>
+
+      <section id="error-panel" class="screen hidden">
+        <span class="badge failed">Failed</span>
+        <div id="error-list" class="error-list"></div>
+        <div class="divider"></div>
+        <a class="help-link" href="https://videosays.com/docs" target="_blank" rel="noreferrer">ⓘ Need help? Visit our help center. ↗</a>
       </section>
 
       <p id="message" class="message"></p>

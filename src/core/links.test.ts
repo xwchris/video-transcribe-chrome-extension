@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { extractFirstSupportedLink, isSupportedVideoUrl, normalizeInput } from './links';
+import { detectPlatformFromInput, extractFirstSupportedLink, isSupportedVideoUrl, normalizeInput } from './links';
 
 describe('links', () => {
   it('extracts the first supported URL from selected share text', () => {
@@ -21,5 +21,16 @@ describe('links', () => {
   it('rejects non-video and browser-internal URLs', () => {
     expect(isSupportedVideoUrl('chrome://extensions')).toBe(false);
     expect(isSupportedVideoUrl('https://example.com/post')).toBe(false);
+  });
+
+  it('detects the same supported platforms as the Videosays product', () => {
+    expect(detectPlatformFromInput('https://v.douyin.com/test/')).toBe('douyin');
+    expect(detectPlatformFromInput('https://www.tiktok.com/@demo/video/123')).toBe('tiktok');
+    expect(detectPlatformFromInput('https://www.xiaohongshu.com/explore/abc')).toBe('xiaohongshu');
+    expect(detectPlatformFromInput('https://www.bilibili.com/video/BV123')).toBe('bilibili');
+    expect(detectPlatformFromInput('https://youtu.be/abc123')).toBe('youtube');
+    expect(detectPlatformFromInput('https://www.kuaishou.com/short-video/abc')).toBe('kuaishou');
+    expect(detectPlatformFromInput('https://www.instagram.com/reels/abc/')).toBe('instagram');
+    expect(detectPlatformFromInput('https://x.com/user/status/123')).toBe('twitter');
   });
 });

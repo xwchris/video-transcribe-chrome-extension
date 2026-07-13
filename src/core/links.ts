@@ -1,16 +1,14 @@
-const SUPPORTED_HOST_PARTS = [
-  'youtube.com',
-  'youtu.be',
-  'tiktok.com',
-  'douyin.com',
-  'iesdouyin.com',
-  'bilibili.com',
-  'b23.tv',
-  'xiaohongshu.com',
-  'kuaishou.com',
-  'instagram.com',
-  'x.com',
-  'twitter.com',
+export type SupportedPlatform = 'douyin' | 'tiktok' | 'xiaohongshu' | 'bilibili' | 'youtube' | 'kuaishou' | 'instagram' | 'twitter';
+
+const PLATFORM_HOSTS: Array<{ platform: SupportedPlatform; hosts: string[] }> = [
+  { platform: 'douyin', hosts: ['douyin.com', 'iesdouyin.com'] },
+  { platform: 'tiktok', hosts: ['tiktok.com'] },
+  { platform: 'xiaohongshu', hosts: ['xiaohongshu.com', 'xhslink.com'] },
+  { platform: 'bilibili', hosts: ['bilibili.com', 'b23.tv'] },
+  { platform: 'youtube', hosts: ['youtube.com', 'youtu.be'] },
+  { platform: 'kuaishou', hosts: ['kuaishou.com', 'gifshow.com'] },
+  { platform: 'instagram', hosts: ['instagram.com'] },
+  { platform: 'twitter', hosts: ['x.com', 'twitter.com'] },
 ];
 
 const URL_PATTERN = /https?:\/\/[^\s"'<>]+/gi;
@@ -20,13 +18,19 @@ export function normalizeInput(input: string): string {
 }
 
 export function isSupportedVideoUrl(input: string): boolean {
+  return detectPlatformFromInput(input) !== null;
+}
+
+export function detectPlatformFromInput(input: string): SupportedPlatform | null {
+  const url = normalizeInput(input).match(URL_PATTERN)?.[0] ?? normalizeInput(input);
   try {
-    const url = new URL(normalizeInput(input));
-    if (url.protocol !== 'https:' && url.protocol !== 'http:') return false;
-    const hostname = url.hostname.toLowerCase();
-    return SUPPORTED_HOST_PARTS.some((hostPart) => hostname === hostPart || hostname.endsWith(`.${hostPart}`));
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null;
+    const hostname = parsed.hostname.toLowerCase();
+    const match = PLATFORM_HOSTS.find(({ hosts }) => hosts.some((host) => hostname === host || hostname.endsWith(`.${host}`)));
+    return match?.platform ?? null;
   } catch {
-    return false;
+    return null;
   }
 }
 
