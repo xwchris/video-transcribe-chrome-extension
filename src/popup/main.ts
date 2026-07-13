@@ -110,6 +110,12 @@ function taskDashboardUrl(taskId: string): string {
   return `https://videosays.com/dashboard?task=${encodeURIComponent(taskId)}`;
 }
 
+function renderStoredTask(task: { taskId: string; input: string; status: string }): void {
+  currentTaskId = task.taskId;
+  videoInput.value = task.input;
+  renderTask({ id: task.taskId, status: task.status, input: task.input });
+}
+
 function setPlatformIcon(element: HTMLElement, platform?: string | null): void {
   const config = PLATFORM_ICON_CONFIG[(platform ?? '') as SupportedPlatform] ?? PLATFORM_ICON_CONFIG.default;
   element.textContent = config.label;
@@ -269,9 +275,10 @@ async function init(): Promise<void> {
   const lastTask = await getLastTask();
   if (!apiKey) {
     setPrimaryScreen('setup');
+  } else if (lastTask && !supported) {
+    renderStoredTask(lastTask);
   } else if (lastTask && shouldAutoRefreshTask(lastTask.status)) {
-    currentTaskId = lastTask.taskId;
-    renderTask({ id: lastTask.taskId, status: lastTask.status, input: lastTask.input });
+    renderStoredTask(lastTask);
   } else {
     setPrimaryScreen('app');
   }

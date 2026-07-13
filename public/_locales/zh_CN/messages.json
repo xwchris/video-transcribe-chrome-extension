@@ -31,6 +31,7 @@
   "refresh": { "message": "⟳ 刷新" },
   "refreshLabel": { "message": "刷新" },
   "dashboard": { "message": "↗ 控制台" },
+  "records": { "message": "↗ 记录页" },
   "fullTranscript": { "message": "↗ 完整文本" },
   "copyPreview": { "message": "▣ 复制预览" },
   "statusRefreshes": { "message": "弹窗打开时会自动刷新状态。" },

@@ -17,17 +17,22 @@ body {
 }
 
 .options-body {
-  width: auto;
-  min-width: 0;
+  display: flex;
+  width: 100vw;
+  max-width: none;
+  min-width: 100%;
   min-height: 100vh;
+  justify-content: center;
+  overflow-x: hidden;
   background: #eef4ef;
 }
 
 .options-shell {
   display: grid;
-  width: min(760px, calc(100vw - 40px));
+  width: calc(100vw - 40px);
+  max-width: 760px;
   gap: 18px;
-  margin: 48px auto;
+  margin: 48px 20px;
 }
 
 .options-header,
@@ -660,6 +665,10 @@ a {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.button-grid .records-button {
+  grid-column: 1 / -1;
 }
 
 .button-grid .hidden {
