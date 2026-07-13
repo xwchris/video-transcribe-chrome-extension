@@ -114,6 +114,25 @@ body {
   gap: 14px;
 }
 
+.brand-link {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-link h1,
+.brand-link p {
+  transition: color 160ms ease;
+}
+
+.brand-link:hover h1 {
+  color: #00684a;
+}
+
+.brand-link:hover p {
+  color: #00734f;
+}
+
 .logo {
   width: 42px;
   height: 42px;
