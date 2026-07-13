@@ -1,3 +1,4 @@
+import { applyI18n, t } from '../core/i18n';
 import { clearStoredApiKey, getStoredApiKey, maskApiKey, setStoredApiKey } from '../core/storage';
 import '../shared/styles.css';
 
@@ -8,19 +9,20 @@ const message = document.querySelector<HTMLElement>('#message')!;
 
 async function init(): Promise<void> {
   const key = await getStoredApiKey();
-  message.textContent = key ? `Current key: ${maskApiKey(key)}` : 'No API key saved.';
+  message.textContent = key ? t('currentKey', maskApiKey(key)) : t('noApiKeySaved');
 }
 
 button.addEventListener('click', async () => {
   await setStoredApiKey(input.value);
   const key = await getStoredApiKey();
-  message.textContent = key ? `Saved ${maskApiKey(key)}` : 'Enter an API key.';
+  message.textContent = key ? t('savedKey', maskApiKey(key)) : t('enterApiKey');
 });
 
 clearButton.addEventListener('click', async () => {
   await clearStoredApiKey();
   input.value = '';
-  message.textContent = 'API key cleared. Open the popup to test first-use setup.';
+  message.textContent = t('apiKeyCleared');
 });
 
+applyI18n();
 void init();

@@ -1,4 +1,5 @@
 import { VideosaysApiError, createVideosaysClient, isTerminalStatus, shouldAutoRefreshTask, type TaskStatusResponse } from '../core/api';
+import { applyI18n, t } from '../core/i18n';
 import { detectPlatformFromInput, extractFirstSupportedLink, type SupportedPlatform } from '../core/links';
 import { getLastTask, getStoredApiKey, maskApiKey, setLastTask, setStoredApiKey } from '../core/storage';
 import '../shared/styles.css';
@@ -40,6 +41,12 @@ let currentTranscript = '';
 let refreshTimer: number | null = null;
 
 const AUTO_REFRESH_INTERVAL_MS = 5000;
+const STATUS_MESSAGE_KEYS: Record<string, string> = {
+  pending: 'statusPending',
+  processing: 'statusProcessing',
+  completed: 'statusCompleted',
+  failed: 'statusFailed',
+};
 
 const PLATFORM_ICON_CONFIG: Record<SupportedPlatform | 'default', { label: string; className: string }> = {
   douyin: { label: '♪', className: 'platform-douyin' },
@@ -91,7 +98,8 @@ async function getActiveTabUrl(): Promise<string> {
 }
 
 function formatStatus(status: string): string {
-  return `${status.slice(0, 1).toUpperCase()}${status.slice(1)}`;
+  const key = STATUS_MESSAGE_KEYS[status];
+  return key ? t(key) : `${status.slice(0, 1).toUpperCase()}${status.slice(1)}`;
 }
 
 function shortTaskId(taskId: string): string {
@@ -111,7 +119,7 @@ function setPlatformIcon(element: HTMLElement, platform?: string | null): void {
 function setProgress(status: string): void {
   const isPending = status === 'pending';
   const percent = isPending ? 18 : 42;
-  progressLabel.textContent = isPending ? 'Waiting in queue...' : 'Transcribing audio...';
+  progressLabel.textContent = isPending ? t('waitingInQueue') : t('transcribingAudio');
   progressValue.textContent = `${percent}%`;
   progressFill.style.width = `${percent}%`;
 }
@@ -122,7 +130,7 @@ function renderTask(task: TaskStatusResponse): void {
   const status = task.status;
   const input = task.input ?? videoInput.value;
   const platform = task.video?.platform ?? detectPlatformFromInput(input);
-  const title = task.video?.title ?? 'Transcription task';
+  const title = task.video?.title ?? t('transcriptionTask');
   const text = task.result?.text?.trim() ?? '';
 
   taskStatus.textContent = formatStatus(status);
@@ -133,19 +141,19 @@ function renderTask(task: TaskStatusResponse): void {
   taskIdElement.textContent = shortTaskId(taskId);
   taskIdElement.title = taskId;
   openTask.href = taskDashboardUrl(taskId);
-  openTask.textContent = status === 'completed' ? '↗ Full transcript' : '↗ Dashboard';
+  openTask.textContent = status === 'completed' ? t('fullTranscript') : t('dashboard');
 
   currentTranscript = text;
   transcript.textContent = text ? text.slice(0, 1200) : '';
   show(transcript, Boolean(text));
   show(copyPreviewButton, Boolean(text));
   show(completedAt, status === 'completed');
-  completedAt.textContent = status === 'completed' ? `Completed on ${new Date().toLocaleString()}` : '';
+  completedAt.textContent = status === 'completed' ? t('completedOn', new Date().toLocaleString()) : '';
   show(progressRow, shouldAutoRefreshTask(status));
   show(refreshButton, shouldAutoRefreshTask(status));
   taskNote.textContent = shouldAutoRefreshTask(status)
-    ? 'Status refreshes while this popup is open.'
-    : 'Full transcript and exports are available in your dashboard.';
+    ? t('statusRefreshes')
+    : t('fullTranscriptNote');
   setProgress(status);
   setPrimaryScreen('task');
 
@@ -158,12 +166,12 @@ function renderTask(task: TaskStatusResponse): void {
 
 function errorActions(error: unknown): Array<{ icon: string; title: string; body: string; action: string; href?: string; onClick?: () => void }> {
   if (error instanceof VideosaysApiError && error.statusCode === 401) {
-    return [{ icon: '⚿', title: 'API key invalid', body: 'The API key you provided is invalid.', action: 'Update API key', onClick: () => setPrimaryScreen('setup') }];
+    return [{ icon: '⚿', title: t('apiKeyInvalid'), body: t('apiKeyInvalidBody'), action: t('updateApiKey'), onClick: () => setPrimaryScreen('setup') }];
   }
   if (error instanceof VideosaysApiError && error.statusCode === 402) {
-    return [{ icon: '▦', title: 'Insufficient credits', body: 'You do not have enough credits.', action: 'Add credits', href: 'https://videosays.com/dashboard/billing' }];
+    return [{ icon: '▦', title: t('insufficientCredits'), body: t('insufficientCreditsBody'), action: t('addCredits'), href: 'https://videosays.com/dashboard/billing' }];
   }
-  return [{ icon: '↛', title: 'Unsupported link', body: error instanceof Error ? error.message : 'This link is not supported.', action: 'Paste a supported public video link', onClick: () => setPrimaryScreen(apiKey ? 'app' : 'setup') }];
+  return [{ icon: '↛', title: t('unsupportedLink'), body: error instanceof Error ? error.message : t('unsupportedLinkBody'), action: t('pasteSupportedLink'), onClick: () => setPrimaryScreen(apiKey ? 'app' : 'setup') }];
 }
 
 function showError(error: unknown): void {
@@ -213,12 +221,12 @@ async function refreshTask(): Promise<void> {
 async function submit(): Promise<void> {
   const link = extractFirstSupportedLink(videoInput.value || (detectedUrl.textContent ?? ''));
   if (!link) {
-    showError(new Error('This link is not supported.'));
+    showError(new Error(t('unsupportedLinkBody')));
     return;
   }
 
   submitButton.disabled = true;
-  setMessage('Submitting task...');
+  setMessage(t('submittingTask'));
   try {
     const client = createVideosaysClient({ apiKey });
     const response = await client.submitTranscription(link);
@@ -232,7 +240,7 @@ async function submit(): Promise<void> {
       createdAt: new Date().toISOString(),
     });
     renderTask({ id: taskId, status: response.status, input: link });
-    setMessage(isTerminalStatus(response.status) ? 'Task completed.' : 'Task created. Status refreshes automatically.');
+    setMessage(isTerminalStatus(response.status) ? t('taskCompleted') : t('taskCreated'));
   } catch (error) {
     showError(error);
   } finally {
@@ -242,12 +250,18 @@ async function submit(): Promise<void> {
 
 async function init(): Promise<void> {
   apiKey = await getStoredApiKey();
-  keyState.innerHTML = apiKey ? `<span aria-hidden="true">✓</span> Using ${maskApiKey(apiKey)}` : '';
+  keyState.replaceChildren();
+  if (apiKey) {
+    const check = document.createElement('span');
+    check.setAttribute('aria-hidden', 'true');
+    check.textContent = '✓';
+    keyState.append(check, ` ${t('usingApiKey', maskApiKey(apiKey))}`);
+  }
 
   const activeUrl = await getActiveTabUrl();
   const supported = extractFirstSupportedLink(activeUrl);
   const platform = supported ? detectPlatformFromInput(supported) : null;
-  detectedUrl.textContent = supported ?? 'No supported video link detected';
+  detectedUrl.textContent = supported ?? t('noSupportedVideoLink');
   setPlatformIcon(detectedPlatformIcon, platform);
   videoInput.value = supported ?? '';
 
@@ -265,7 +279,7 @@ async function init(): Promise<void> {
 saveKeyButton.addEventListener('click', async () => {
   await setStoredApiKey(apiKeyInput.value);
   apiKey = await getStoredApiKey();
-  setMessage(apiKey ? 'API key saved.' : 'Enter an API key.', apiKey ? 'default' : 'error');
+  setMessage(apiKey ? t('apiKeySaved') : t('enterApiKey'), apiKey ? 'default' : 'error');
   await init();
 });
 
@@ -280,4 +294,5 @@ copyPreviewButton.addEventListener('click', () => {
 });
 window.addEventListener('beforeunload', stopAutoRefresh);
 
+applyI18n();
 void init();

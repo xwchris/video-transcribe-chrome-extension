@@ -13,10 +13,10 @@
           <img class="logo" src="/icons/icon48.png" alt="" aria-hidden="true" />
           <div>
             <h1>Videosays</h1>
-            <p>Video to text · videosays.com ↗</p>
+            <p data-i18n="brandSubtitle">Video to text · videosays.com ↗</p>
           </div>
         </a>
-        <button id="settings" type="button" class="icon-button" title="Settings" aria-label="Open settings">
+        <button id="settings" type="button" class="icon-button" title="Settings" aria-label="Open settings" data-i18n-title="settings" data-i18n-aria-label="settings">
           <svg aria-hidden="true" viewBox="0 0 1024 1024">
             <path d="M899.2 379.2a439.68 439.68 0 0 0-19.52-47.04 137.28 137.28 0 0 0-187.84-187.84 439.68 439.68 0 0 0-47.04-19.52 137.28 137.28 0 0 0-265.6 0 439.68 439.68 0 0 0-47.04 19.52 137.28 137.28 0 0 0-187.84 187.84 439.68 439.68 0 0 0-19.52 47.04 137.28 137.28 0 0 0 0 265.6 439.68 439.68 0 0 0 19.52 47.04 137.28 137.28 0 0 0 187.84 187.84 439.68 439.68 0 0 0 47.04 19.52 137.28 137.28 0 0 0 265.6 0 439.68 439.68 0 0 0 47.04-19.52 137.28 137.28 0 0 0 187.84-187.84 439.68 439.68 0 0 0 19.52-47.04 137.28 137.28 0 0 0 0-265.6z m-33.6 186.88a41.6 41.6 0 0 0-38.72 32 314.24 314.24 0 0 1-32 77.76 41.92 41.92 0 0 0 5.12 48A54.08 54.08 0 0 1 723.84 800a41.92 41.92 0 0 0-49.28-5.76 314.24 314.24 0 0 1-77.76 32 41.6 41.6 0 0 0-32 38.72 54.08 54.08 0 0 1-108.16 0 41.6 41.6 0 0 0-32-38.72 314.24 314.24 0 0 1-77.76-32 43.84 43.84 0 0 0-20.8-5.44 42.24 42.24 0 0 0-28.48 11.2A54.08 54.08 0 0 1 224 723.84a41.92 41.92 0 0 0 5.76-49.28 314.24 314.24 0 0 1-32-77.76 41.6 41.6 0 0 0-38.72-32 54.08 54.08 0 0 1 0-108.16 41.6 41.6 0 0 0 38.72-32 314.24 314.24 0 0 1 32-77.76A41.92 41.92 0 0 0 224 300.16 54.08 54.08 0 0 1 300.16 224a41.92 41.92 0 0 0 49.28 5.76 314.24 314.24 0 0 1 77.76-32 41.6 41.6 0 0 0 32-38.72 54.08 54.08 0 0 1 108.16 0 41.6 41.6 0 0 0 32 38.72 314.24 314.24 0 0 1 77.76 32A41.92 41.92 0 0 0 723.84 224 54.08 54.08 0 0 1 800 300.16a41.92 41.92 0 0 0-5.76 49.28 314.24 314.24 0 0 1 32 77.76 41.6 41.6 0 0 0 38.72 32 54.08 54.08 0 0 1 0 108.16z" />
             <path d="M512 310.4a201.6 201.6 0 1 0 201.6 201.6A201.92 201.92 0 0 0 512 310.4z m0 320a118.4 118.4 0 1 1 118.4-118.4 118.4 118.4 0 0 1-118.4 118.4z" />
@@ -26,44 +26,44 @@
 
       <section id="setup" class="screen hidden">
         <div class="setup-intro">
-          <h2>Transcribe videos from Chrome</h2>
-          <p>Open a public video page, click Videosays, and submit the link to create a transcript task.</p>
+          <h2 data-i18n="setupTitle">Transcribe videos from Chrome</h2>
+          <p data-i18n="setupBody">Open a public video page, click Videosays, and submit the link to create a transcript task.</p>
           <div class="setup-steps">
-            <span>1. Save API key</span>
-            <span>2. Open video page</span>
-            <span>3. Transcribe</span>
+            <span data-i18n="setupStep1">1. Save API key</span>
+            <span data-i18n="setupStep2">2. Open video page</span>
+            <span data-i18n="setupStep3">3. Transcribe</span>
           </div>
         </div>
-        <label for="api-key">API key</label>
-        <input id="api-key" type="password" autocomplete="off" placeholder="dy_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
-        <button id="save-key" type="button" class="primary-button">Save API key</button>
+        <label for="api-key" data-i18n="apiKey">API key</label>
+        <input id="api-key" type="password" autocomplete="off" placeholder="dy_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" data-i18n-placeholder="apiKeyPlaceholder" />
+        <button id="save-key" type="button" class="primary-button" data-i18n="saveApiKey">Save API key</button>
         <a class="link-row centered" href="https://videosays.com/dashboard/developer" target="_blank" rel="noreferrer">
           <span aria-hidden="true">↗</span>
-          Get API key from Videosays dashboard
+          <span data-i18n="getApiKey">Get API key from Videosays dashboard</span>
         </a>
         <div class="divider"></div>
-        <p class="lock-note">Your API key is stored locally in Chrome. Videosays receives only links you submit.</p>
+        <p class="lock-note" data-i18n="localKeyNote">Your API key is stored locally in Chrome. Videosays receives only links you submit.</p>
       </section>
 
       <section id="app" class="screen hidden">
-        <label>Detected video link</label>
+        <label data-i18n="detectedVideoLink">Detected video link</label>
         <div class="detected-link">
           <span id="detected-platform-icon" class="platform-icon" aria-hidden="true">▶</span>
           <span id="detected-url" class="detected-url"></span>
         </div>
-        <label for="video-input">Or paste a video link</label>
+        <label for="video-input" data-i18n="pasteVideoLink">Or paste a video link</label>
         <div class="input-wrap">
           <input id="video-input" type="url" placeholder="https://..." />
         </div>
-        <button id="submit" type="button" class="primary-button">Transcribe this page</button>
-        <p class="support-copy">Supports public video links from YouTube, TikTok, Douyin, Bilibili, Instagram, X, and more.</p>
+        <button id="submit" type="button" class="primary-button" data-i18n="transcribeThisPage">Transcribe this page</button>
+        <p class="support-copy" data-i18n="supportedPlatforms">Supports public video links from YouTube, TikTok, Douyin, Bilibili, Instagram, X, and more.</p>
         <div class="divider"></div>
         <p id="key-state" class="key-state"></p>
       </section>
 
       <section id="task" class="screen hidden">
         <div class="task-head">
-          <span id="task-status" class="badge">Pending</span>
+          <span id="task-status" class="badge" data-i18n="statusPending">Pending</span>
         </div>
         <div class="media-row">
           <span id="task-platform-icon" class="platform-icon small" aria-hidden="true">▶</span>
@@ -73,16 +73,16 @@
           </div>
         </div>
         <div class="task-id-row">
-          <span>Task ID:</span>
+          <span data-i18n="taskId">Task ID:</span>
           <code id="task-id"></code>
-          <button id="copy-task-id" type="button" class="copy-button" title="Copy task ID" aria-label="Copy task ID">▣</button>
+          <button id="copy-task-id" type="button" class="copy-button" title="Copy task ID" aria-label="Copy task ID" data-i18n-title="copyTaskId" data-i18n-aria-label="copyTaskId">▣</button>
         </div>
         <p id="completed-at" class="completed-at hidden"></p>
         <div id="progress-row" class="progress-row hidden">
           <span class="spinner" aria-hidden="true"></span>
           <div class="progress-copy">
             <div class="progress-meta">
-              <span id="progress-label">Transcribing audio...</span>
+              <span id="progress-label" data-i18n="transcribingAudio">Transcribing audio...</span>
               <span id="progress-value">42%</span>
             </div>
             <div class="progress-track"><span id="progress-fill"></span></div>
@@ -90,18 +90,18 @@
         </div>
         <pre id="transcript" class="transcript hidden"></pre>
         <div class="button-grid">
-          <button id="refresh" type="button" class="secondary-button">⟳ Refresh</button>
-          <a id="open-task" class="button-link" target="_blank" rel="noreferrer">↗ Dashboard</a>
-          <button id="copy-preview" type="button" class="secondary-button hidden">▣ Copy preview</button>
+          <button id="refresh" type="button" class="secondary-button" data-i18n="refresh">⟳ Refresh</button>
+          <a id="open-task" class="button-link" target="_blank" rel="noreferrer" data-i18n="dashboard">↗ Dashboard</a>
+          <button id="copy-preview" type="button" class="secondary-button hidden" data-i18n="copyPreview">▣ Copy preview</button>
         </div>
-        <p id="task-note" class="task-note">Status refreshes while this popup is open.</p>
+        <p id="task-note" class="task-note" data-i18n="statusRefreshes">Status refreshes while this popup is open.</p>
       </section>
 
       <section id="error-panel" class="screen hidden">
-        <span class="badge failed">Failed</span>
+        <span class="badge failed" data-i18n="statusFailed">Failed</span>
         <div id="error-list" class="error-list"></div>
         <div class="divider"></div>
-        <a class="help-link" href="https://videosays.com/docs" target="_blank" rel="noreferrer">ⓘ Need help? Visit our help center. ↗</a>
+        <a class="help-link" href="https://videosays.com/docs" target="_blank" rel="noreferrer" data-i18n="needHelp">ⓘ Need help? Visit our help center. ↗</a>
       </section>
 
       <p id="message" class="message"></p>

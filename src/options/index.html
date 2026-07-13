@@ -13,34 +13,34 @@
           <img class="logo" src="/icons/icon48.png" alt="" aria-hidden="true" />
           <div>
             <p class="options-kicker">Videosays</p>
-            <h1>Extension settings</h1>
-            <p>Manage your API key and browser extension privacy settings.</p>
+            <h1 data-i18n="optionsTitle">Extension settings</h1>
+            <p data-i18n="optionsSubtitle">Manage your API key and browser extension privacy settings.</p>
           </div>
         </div>
       </header>
 
       <section class="options-panel">
         <div>
-          <h2>API key</h2>
-          <p class="options-copy">Use your Videosays API key to submit transcription tasks from Chrome.</p>
+          <h2 data-i18n="apiKey">API key</h2>
+          <p class="options-copy" data-i18n="optionsApiBody">Use your Videosays API key to submit transcription tasks from Chrome.</p>
         </div>
-        <label for="api-key">Videosays API key</label>
-        <input id="api-key" type="password" autocomplete="off" placeholder="dy_xxxxx" />
+        <label for="api-key" data-i18n="videosaysApiKey">Videosays API key</label>
+        <input id="api-key" type="password" autocomplete="off" placeholder="dy_xxxxx" data-i18n-placeholder="apiKeyPlaceholder" />
         <div class="options-actions">
-          <button id="save-key" type="button" class="primary-button">Save API key</button>
-          <button id="clear-key" type="button" class="secondary-button">Clear API key</button>
+          <button id="save-key" type="button" class="primary-button" data-i18n="saveApiKey">Save API key</button>
+          <button id="clear-key" type="button" class="secondary-button" data-i18n="clearApiKey">Clear API key</button>
         </div>
         <p id="message" class="options-message"></p>
       </section>
 
       <section class="options-panel">
         <div>
-          <h2>Privacy</h2>
-          <p class="options-copy">The extension sends only the video link you submit, your API request, and task metadata to Videosays. It does not read page content in the background.</p>
+          <h2 data-i18n="privacy">Privacy</h2>
+          <p class="options-copy" data-i18n="privacyBody">The extension sends only the video link you submit, your API request, and task metadata to Videosays. It does not read page content in the background.</p>
         </div>
         <div class="options-actions">
-          <a class="secondary-button" href="https://videosays.com/dashboard/developer" target="_blank" rel="noreferrer">Get API key</a>
-          <a class="secondary-button" href="https://videosays.com/docs" target="_blank" rel="noreferrer">API docs</a>
+          <a class="secondary-button" href="https://videosays.com/dashboard/developer" target="_blank" rel="noreferrer" data-i18n="getApiKeyShort">Get API key</a>
+          <a class="secondary-button" href="https://videosays.com/docs" target="_blank" rel="noreferrer" data-i18n="apiDocs">API docs</a>
         </div>
       </section>
     </main>

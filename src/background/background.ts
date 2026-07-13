@@ -1,4 +1,5 @@
 import { createVideosaysClient } from '../core/api';
+import { t } from '../core/i18n';
 import { extractFirstSupportedLink } from '../core/links';
 import { getStoredApiKey, setLastTask } from '../core/storage';
 
@@ -35,7 +36,7 @@ async function submitFromInput(input: string): Promise<void> {
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: CONTEXT_MENU_ID,
-    title: 'Transcribe with Videosays',
+    title: t('actionTitle'),
     contexts: ['page', 'selection', 'link', 'video'],
   });
 });
