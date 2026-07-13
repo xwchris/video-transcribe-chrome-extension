@@ -6,25 +6,39 @@
     <title>Videosays Options</title>
     <script type="module" src="./main.ts"></script>
   </head>
-  <body>
-    <main class="shell options">
-      <header>
-        <div>
-          <p class="eyebrow">Videosays</p>
-          <h1>Extension settings</h1>
+  <body class="options-body">
+    <main class="options-shell">
+      <header class="options-header">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">V</div>
+          <div>
+            <p class="options-kicker">Videosays</p>
+            <h1>Extension settings</h1>
+            <p>Manage your API key and browser extension privacy settings.</p>
+          </div>
         </div>
       </header>
-      <section class="panel">
-        <label for="api-key">API key</label>
+
+      <section class="options-panel">
+        <div>
+          <h2>API key</h2>
+          <p class="options-copy">Use your Videosays API key to submit transcription tasks from Chrome.</p>
+        </div>
+        <label for="api-key">Videosays API key</label>
         <input id="api-key" type="password" autocomplete="off" placeholder="vs_xxxxx" />
-        <button id="save-key" type="button">Save key</button>
-        <p id="message" class="message"></p>
+        <button id="save-key" type="button" class="primary-button">Save API key</button>
+        <p id="message" class="options-message"></p>
       </section>
-      <section class="panel text">
-        <h2>Privacy</h2>
-        <p>The extension sends only the video link you submit, your API request, and task metadata to Videosays. It does not read page content in the background.</p>
-        <a href="https://videosays.com/dashboard/developer" target="_blank" rel="noreferrer">Get API key</a>
-        <a href="https://videosays.com/docs" target="_blank" rel="noreferrer">API docs</a>
+
+      <section class="options-panel">
+        <div>
+          <h2>Privacy</h2>
+          <p class="options-copy">The extension sends only the video link you submit, your API request, and task metadata to Videosays. It does not read page content in the background.</p>
+        </div>
+        <div class="options-actions">
+          <a class="secondary-button" href="https://videosays.com/dashboard/developer" target="_blank" rel="noreferrer">Get API key</a>
+          <a class="secondary-button" href="https://videosays.com/docs" target="_blank" rel="noreferrer">API docs</a>
+        </div>
       </section>
     </main>
   </body>
