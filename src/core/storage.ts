@@ -1,3 +1,5 @@
+import type { TaskStatusResponse } from './api';
+
 export const API_KEY_STORAGE_KEY = 'videosaysApiKey';
 export const LAST_TASK_STORAGE_KEY = 'videosaysLastTask';
 
@@ -6,6 +8,7 @@ export interface StoredTask {
   input: string;
   status: string;
   createdAt: string;
+  task?: TaskStatusResponse;
 }
 
 export function maskApiKey(value: string): string {

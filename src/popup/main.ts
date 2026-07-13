@@ -3,7 +3,7 @@ import { createSrt, safeExportFilename, type ExportTranscriptSegment } from '../
 import { applyI18n, t } from '../core/i18n';
 import { areEquivalentSupportedLinks, detectPlatformFromInput, extractFirstSupportedLink, type SupportedPlatform } from '../core/links';
 import { taskDashboardUrl } from '../core/routes';
-import { getLastTask, getStoredApiKey, maskApiKey, setLastTask, setStoredApiKey } from '../core/storage';
+import { getLastTask, getStoredApiKey, maskApiKey, setLastTask, setStoredApiKey, type StoredTask } from '../core/storage';
 import '../shared/styles.css';
 
 const setup = document.querySelector<HTMLElement>('#setup')!;
@@ -133,10 +133,11 @@ function downloadText(filename: string, text: string): void {
   URL.revokeObjectURL(url);
 }
 
-async function renderStoredTask(task: { taskId: string; input: string; status: string }): Promise<void> {
-  currentTaskId = task.taskId;
-  videoInput.value = task.input;
-  renderTask({ id: task.taskId, status: task.status, input: task.input });
+async function renderStoredTask(storedTask: StoredTask): Promise<void> {
+  currentTaskId = storedTask.taskId;
+  videoInput.value = storedTask.input;
+  renderTask(storedTask.task ?? { id: storedTask.taskId, status: storedTask.status, input: storedTask.input });
+  if (storedTask.task?.status === 'completed' && storedTask.task.result?.text) return;
   await refreshTask().catch(showError);
 }
 
@@ -253,6 +254,7 @@ async function refreshTask(): Promise<void> {
     input: task.input ?? videoInput.value,
     status: task.status,
     createdAt: new Date().toISOString(),
+    task,
   });
 }
 
