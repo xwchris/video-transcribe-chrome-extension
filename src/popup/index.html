@@ -25,6 +25,15 @@
       </header>
 
       <section id="setup" class="screen hidden">
+        <div class="setup-intro">
+          <h2>Transcribe videos from Chrome</h2>
+          <p>Open a public video page, click Videosays, and submit the link to create a transcript task.</p>
+          <div class="setup-steps">
+            <span>1. Save API key</span>
+            <span>2. Open video page</span>
+            <span>3. Transcribe</span>
+          </div>
+        </div>
         <label for="api-key">API key</label>
         <input id="api-key" type="password" autocomplete="off" placeholder="dy_xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
         <button id="save-key" type="button" class="primary-button">Save API key</button>
@@ -33,7 +42,7 @@
           Get API key from Videosays dashboard
         </a>
         <div class="divider"></div>
-        <p class="lock-note"><span aria-hidden="true">▢</span> Your key is stored locally in Chrome.</p>
+        <p class="lock-note">Your API key is stored locally in Chrome. Videosays receives only links you submit.</p>
       </section>
 
       <section id="app" class="screen hidden">
