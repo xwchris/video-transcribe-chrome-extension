@@ -1,0 +1,19 @@
+{
+  "name": "videosays-chrome-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome extension for submitting public video links to Videosays transcription.",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "build": "vite build",
+    "audit:remote-code": "node scripts/audit-remote-code.mjs",
+    "package": "npm run build && npm run audit:remote-code && node scripts/zip-dist.mjs"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.2.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.4",
+    "vitest": "^4.1.10"
+  }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Videosays</title>
+    <script type="module" src="./main.ts"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div>
+          <p class="eyebrow">Videosays</p>
+          <h1>Video to text</h1>
+        </div>
+        <a class="icon-link" href="https://videosays.com/dashboard" target="_blank" rel="noreferrer" title="Open dashboard">↗</a>
+      </header>
+
+      <section id="setup" class="panel hidden">
+        <label for="api-key">API key</label>
+        <input id="api-key" type="password" autocomplete="off" placeholder="vs_xxxxx" />
+        <button id="save-key" type="button">Save key</button>
+        <p class="hint">Find your key in Videosays Dashboard → Agent / API.</p>
+      </section>
+
+      <section id="app" class="panel hidden">
+        <label for="video-input">Video link</label>
+        <textarea id="video-input" rows="4" placeholder="Current tab URL or pasted share text"></textarea>
+        <button id="submit" type="button">Transcribe this page</button>
+        <p id="key-state" class="hint"></p>
+      </section>
+
+      <section id="task" class="panel hidden">
+        <div class="row">
+          <span id="task-status" class="badge">pending</span>
+          <button id="refresh" type="button" class="secondary">Refresh</button>
+        </div>
+        <p id="task-title" class="task-title"></p>
+        <pre id="transcript" class="transcript hidden"></pre>
+        <a id="open-task" class="button-link" target="_blank" rel="noreferrer">Open in dashboard</a>
+      </section>
+
+      <p id="message" class="message"></p>
+    </main>
+  </body>
+</html>
