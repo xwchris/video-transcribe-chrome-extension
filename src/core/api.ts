@@ -107,6 +107,10 @@ export function isTerminalStatus(status: TaskStatus): boolean {
   return status === 'completed' || status === 'failed';
 }
 
+export function shouldAutoRefreshTask(status: TaskStatus): boolean {
+  return !isTerminalStatus(status);
+}
+
 export function createVideosaysClient(options: VideosaysClientOptions): VideosaysClient {
   const fetchImpl = options.fetchImpl ?? fetch;
 

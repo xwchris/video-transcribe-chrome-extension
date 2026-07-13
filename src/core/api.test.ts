@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { VideosaysApiError, createVideosaysClient, isTerminalStatus } from './api';
+import { VideosaysApiError, createVideosaysClient, isTerminalStatus, shouldAutoRefreshTask } from './api';
 
 describe('Videosays API client', () => {
   it('submits a transcription task with API key and extension tracking', async () => {
@@ -44,6 +44,13 @@ describe('Videosays API client', () => {
     expect(isTerminalStatus('completed')).toBe(true);
     expect(isTerminalStatus('failed')).toBe(true);
     expect(isTerminalStatus('processing')).toBe(false);
+  });
+
+  it('auto refreshes only non-terminal task statuses', () => {
+    expect(shouldAutoRefreshTask('pending')).toBe(true);
+    expect(shouldAutoRefreshTask('processing')).toBe(true);
+    expect(shouldAutoRefreshTask('completed')).toBe(false);
+    expect(shouldAutoRefreshTask('failed')).toBe(false);
   });
 
   it('preserves non-JSON failure bodies', async () => {

@@ -1,4 +1,4 @@
-import { createVideosaysClient, isTerminalStatus, type TaskStatusResponse } from '../core/api';
+import { createVideosaysClient, isTerminalStatus, shouldAutoRefreshTask, type TaskStatusResponse } from '../core/api';
 import { extractFirstSupportedLink } from '../core/links';
 import { getLastTask, getStoredApiKey, maskApiKey, setLastTask, setStoredApiKey } from '../core/storage';
 import '../shared/styles.css';
@@ -20,6 +20,9 @@ const refreshButton = document.querySelector<HTMLButtonElement>('#refresh')!;
 
 let apiKey = '';
 let currentTaskId = '';
+let refreshTimer: number | null = null;
+
+const AUTO_REFRESH_INTERVAL_MS = 5000;
 
 function show(element: HTMLElement, visible: boolean): void {
   element.classList.toggle('hidden', !visible);
@@ -28,6 +31,22 @@ function show(element: HTMLElement, visible: boolean): void {
 function setMessage(value: string, kind: 'default' | 'error' = 'default'): void {
   message.textContent = value;
   message.classList.toggle('error', kind === 'error');
+}
+
+function stopAutoRefresh(): void {
+  if (refreshTimer === null) return;
+  window.clearInterval(refreshTimer);
+  refreshTimer = null;
+}
+
+function startAutoRefresh(): void {
+  stopAutoRefresh();
+  refreshTimer = window.setInterval(() => {
+    void refreshTask().catch((error) => {
+      stopAutoRefresh();
+      setMessage(error instanceof Error ? error.message : 'Failed to refresh task.', 'error');
+    });
+  }, AUTO_REFRESH_INTERVAL_MS);
 }
 
 async function getActiveTabUrl(): Promise<string> {
@@ -47,6 +66,12 @@ function renderTask(task: TaskStatusResponse): void {
   transcript.textContent = text ? text.slice(0, 1200) : '';
   show(transcript, Boolean(text));
   show(taskPanel, true);
+
+  if (shouldAutoRefreshTask(task.status)) {
+    startAutoRefresh();
+  } else {
+    stopAutoRefresh();
+  }
 }
 
 async function refreshTask(): Promise<void> {
@@ -84,7 +109,7 @@ async function submit(): Promise<void> {
       createdAt: new Date().toISOString(),
     });
     renderTask({ id: taskId, status: response.status, input: link });
-    setMessage(isTerminalStatus(response.status) ? 'Task completed.' : 'Task created. Refresh to check progress.');
+    setMessage(isTerminalStatus(response.status) ? 'Task completed.' : 'Task created. Status refreshes automatically.');
   } catch (error) {
     const text = error instanceof Error ? error.message : 'Failed to submit task.';
     setMessage(text, 'error');
@@ -121,5 +146,6 @@ submitButton.addEventListener('click', () => void submit());
 refreshButton.addEventListener('click', () => void refreshTask().catch((error) => {
   setMessage(error instanceof Error ? error.message : 'Failed to refresh task.', 'error');
 }));
+window.addEventListener('beforeunload', stopAutoRefresh);
 
 void init();
