@@ -39,7 +39,7 @@
   "transcriptCopied": { "message": "Transcript copied." },
   "srtDownloaded": { "message": "SRT downloaded." },
   "statusRefreshes": { "message": "Status refreshes while this popup is open." },
-  "fullTranscriptNote": { "message": "Full transcript and exports are available in your dashboard." },
+  "fullTranscriptNote": { "message": "More details, exports, and history are available in your dashboard." },
   "needHelp": { "message": "ⓘ Need help? Visit our help center. ↗" },
   "transcriptionTask": { "message": "Transcription task" },
   "completedOn": { "message": "Completed on $TIME$", "placeholders": { "time": { "content": "$1" } } },

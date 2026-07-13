@@ -39,7 +39,7 @@
   "transcriptCopied": { "message": "完整文案已复制。" },
   "srtDownloaded": { "message": "SRT 已下载。" },
   "statusRefreshes": { "message": "弹窗打开时会自动刷新状态。" },
-  "fullTranscriptNote": { "message": "完整文本和导出文件可在控制台查看。" },
+  "fullTranscriptNote": { "message": "更多详情、导出和历史记录可在控制台查看。" },
   "needHelp": { "message": "ⓘ 需要帮助？查看帮助中心。↗" },
   "transcriptionTask": { "message": "转写任务" },
   "completedOn": { "message": "完成时间：$TIME$", "placeholders": { "time": { "content": "$1" } } },
